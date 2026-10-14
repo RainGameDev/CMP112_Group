@@ -189,7 +189,7 @@ namespace ColbyO.VNTG.ColorPalette.Editor
         {
             _paletteGridUI.OnSelectionChanged += (newIndex) =>
             {
-                _colorWheelUI.RefreshCacheAndTextures();
+                _colorWheelUI.RefreshCacheAndTextures();
                 _colorControlUI.BindPalette(_palette, newIndex);
             };
 
