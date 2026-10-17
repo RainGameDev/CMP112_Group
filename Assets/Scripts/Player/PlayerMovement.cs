@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
 
+    [Header("Movement/jump")]
+    public float jumpHeight = 20f;
+    public Transform groundCheck;
+    public LayerMask jumpMask;
+
     [Header("Movement/Dash")]
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
@@ -18,7 +23,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Debug Inputs")]
     public Vector2 moveDirection;
     public bool dashPressed;
+    public bool jumpPressed;
 
+    bool isJumping;
     bool dashQueued;
     bool isDashing;
     float dashTimeLeft;
@@ -34,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveDirection = inputs.Movement.WASD.ReadValue<Vector2>();
+
+        RaycastHit hit;
+
+        if (inputs.Movement.Jump.WasPressedThisFrame())
+            jumpPressed = true;
 
         if (inputs.Movement.Dash.WasPressedThisFrame())
             dashQueued = true;
@@ -54,6 +66,17 @@ public class PlayerMovement : MonoBehaviour
         if (cooldownTimeLeft > 0f)
             cooldownTimeLeft -= Time.fixedDeltaTime;
 
+        if (IsGrounded() && jumpPressed)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
+        jumpPressed = false;
+
         //dash
         if (dashQueued && !isDashing && cooldownTimeLeft <= 0f)
         {
@@ -67,7 +90,22 @@ public class PlayerMovement : MonoBehaviour
         // Dash override
         if (isDashing)
         {
-            rb.linearVelocity = new Vector3(dashDir.x * dashSpeed, 0, dashDir.z * dashSpeed);
+            if (isJumping)
+            {
+                rb.linearVelocity = new Vector3(
+                    dashDir.x * dashSpeed * 2.5f,
+                    rb.linearVelocity.y,
+                    dashDir.z * dashSpeed * 2.5f
+                );
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(
+                    dashDir.x * dashSpeed,
+                    rb.linearVelocity.y,
+                    dashDir.z * dashSpeed
+                );
+            }
 
             dashTimeLeft -= Time.fixedDeltaTime;
             if (dashTimeLeft <= 0f)
@@ -77,7 +115,28 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // movement
-        Vector3 move = inputDir * movementSpeed;
-        rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
+        if (IsGrounded())
+        {
+            Vector3 move = inputDir * movementSpeed;
+            rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
+        }
+    }
+
+    bool IsGrounded()
+    {
+        return Physics.CheckSphere(
+            groundCheck.position,
+            0.25f,
+            jumpMask,
+            QueryTriggerInteraction.Ignore
+        );
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null)
+            return;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, 0.25f);
     }
 }
