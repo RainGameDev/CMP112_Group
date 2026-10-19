@@ -18,7 +18,17 @@ public class InteractionManager : MonoBehaviour
     {
         if (inputs.Actions.Interact.IsPressed())
         {
-            interactables[interactionIndex].Interact();
+            if (interactables[interactionIndex])
+            {
+                interactables[interactionIndex].Interact();
+            }
+        }
+        for (int i = 0; i < interactables.Capacity; i++)
+        {
+            if (interactables[i] == null)
+            {
+                interactables.RemoveAt(i);
+            }
         }
     }
 
