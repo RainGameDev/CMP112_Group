@@ -16,18 +16,16 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
+        interactables.RemoveAll(x => x == null || (x is UnityEngine.Object o && o == null));
         if (inputs.Actions.Interact.IsPressed())
         {
+            if (interactables.Capacity <= interactionIndex)
+            {
+                return;
+            }
             if (interactables[interactionIndex])
             {
                 interactables[interactionIndex].Interact();
-            }
-        }
-        for (int i = 0; i < interactables.Capacity; i++)
-        {
-            if (interactables[i] == null)
-            {
-                interactables.RemoveAt(i);
             }
         }
     }

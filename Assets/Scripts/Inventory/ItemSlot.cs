@@ -10,7 +10,7 @@ public class ItemSlot : MonoBehaviour
     public Image itemIcon;
 
     // Update is called once per frame
-    void Start()
+    void Update()
     {
         amountLabel.text = item.amount.ToString();
         itemIcon.sprite = item.item.itemIcon;
