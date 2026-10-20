@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     public ContainerItem item;
+    public Container container;
 
     public TMP_Text amountLabel;
     public Image itemIcon;
@@ -14,5 +15,10 @@ public class ItemSlot : MonoBehaviour
     {
         amountLabel.text = item.amount.ToString();
         itemIcon.sprite = item.item.itemIcon;
+    }
+
+    public void RemoveItem()
+    {
+        container.RemoveItem(item);
     }
 }

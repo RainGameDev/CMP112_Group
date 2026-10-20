@@ -28,6 +28,7 @@ public class ContainerUI : MonoBehaviour
     {
         container.OnItemAdded += HandleItemAdded;
         container.OnItemUpdated += HandleItemUpdated;
+        container.OnItemRemoved += HandleItemRemoved;
     }
 
     void Start()
@@ -40,6 +41,21 @@ public class ContainerUI : MonoBehaviour
     {
         if (inputs.UI.InventoryOpen.WasPressedThisFrame())
             containerUI.SetActive(!containerUI.activeInHierarchy);
+    }
+
+    void HandleItemRemoved(ContainerItem item)
+    {
+        for (int i = 0; i < itemToSlot.Count; i++)
+        {
+            if (itemToSlot[i] == item.item)
+            {
+                Destroy(itemSlots[i]);
+                itemToSlot.RemoveAt(i);
+                itemSlots.RemoveAt(i);
+
+                break;
+            }
+        }
     }
 
     void HandleItemUpdated(ContainerItem item)
@@ -60,6 +76,7 @@ public class ContainerUI : MonoBehaviour
     {
         GameObject slot = Instantiate(itemSlot);
         slot.GetComponent<ItemSlot>().item = item;
+        slot.GetComponent<ItemSlot>().container = container;
         slot.transform.parent = itemSlotHolder.transform;
         itemSlots.Add(slot);
         itemToSlot.Add(item.item);

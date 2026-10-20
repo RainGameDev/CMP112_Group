@@ -268,6 +268,7 @@ MonoBehaviour:
   item:
     item: {fileID: 0}
     amount: 0
+  container: {fileID: 0}
   amountLabel: {fileID: 5469099093179121561}
   itemIcon: {fileID: 5289238032065160091}
 --- !u!1 &3211772857011140952
@@ -465,7 +466,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3231011506678451167}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7968624766190726936}
+        m_TargetAssemblyTypeName: ItemSlot, Assembly-CSharp
+        m_MethodName: RemoveItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8650647202874641615
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class Container : MonoBehaviour
 {
     public List<ContainerItem> items;
     public event Action<ContainerItem> OnItemAdded;
+    public event Action<ContainerItem> OnItemRemoved;
     public event Action<ContainerItem> OnItemUpdated;
 
     public void AddItem(ContainerItem item)
@@ -25,5 +26,11 @@ public class Container : MonoBehaviour
 
         items.Add(item);
         OnItemAdded?.Invoke(item);
+    }
+
+    public void RemoveItem(ContainerItem item)
+    {
+        OnItemRemoved?.Invoke(item);
+        items.Remove(items.Find(x => x.item == item.item));
     }
 }

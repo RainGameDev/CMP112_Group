@@ -17,9 +17,9 @@ public class InteractionManager : MonoBehaviour
     void Update()
     {
         interactables.RemoveAll(x => x == null || (x is UnityEngine.Object o && o == null));
-        if (inputs.Actions.Interact.IsPressed())
+        if (inputs.Actions.Interact.WasPressedThisFrame())
         {
-            if (interactables.Capacity <= interactionIndex)
+            if (interactables.Capacity < interactionIndex)
             {
                 return;
             }
