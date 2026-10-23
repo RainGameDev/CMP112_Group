@@ -1,28 +1,51 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("References")]
+    [BoxGroup("References")]
     public Rigidbody rb;
+
+    [BoxGroup("References")]
     public Transform camera;
+
+    [BoxGroup("References")]
     public PlayerInputs inputs;
 
-    [Header("Movement")]
+    [BoxGroup("Movement")]
     public float movementSpeed;
 
-    [Header("Movement/jump")]
+    [BoxGroup("Movement/jump")]
     public float jumpHeight = 20f;
+
+    [BoxGroup("Movement/jump")]
     public Transform groundCheck;
+
+    [BoxGroup("Movement/jump")]
     public LayerMask jumpMask;
 
-    [Header("Movement/Dash")]
+    [BoxGroup("Movement/Dash")]
     public float dashSpeed = 20f;
+
+    [BoxGroup("Movement/Dash")]
     public float dashDuration = 0.2f;
+
+    [BoxGroup("Movement/Dash")]
     public float dashCooldown = 1f;
 
-    [Header("Debug Inputs")]
+    [BoxGroup("Rotation")]
+    public Transform rotationObject;
+
+    [BoxGroup("Rotation")]
+    public float rotationSpeed = 720f;
+
+    [BoxGroup("Debug Inputs")]
     public Vector2 moveDirection;
+
+    [BoxGroup("Debug Inputs")]
     public bool dashPressed;
+
+    [BoxGroup("Debug Inputs")]
     public bool jumpPressed;
 
     bool isJumping;
@@ -49,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputs.Movement.Dash.WasPressedThisFrame())
             dashQueued = true;
+
+        Rotate();
     }
 
     void FixedUpdate()
@@ -115,11 +140,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // movement
-        if (IsGrounded())
-        {
-            Vector3 move = inputDir * movementSpeed;
-            rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
-        }
+        Vector3 move = inputDir * movementSpeed;
+        rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
     }
 
     bool IsGrounded()
@@ -138,5 +160,29 @@ public class PlayerMovement : MonoBehaviour
             return;
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(groundCheck.position, 0.25f);
+    }
+
+    void Rotate()
+    {
+        Vector3 forward = camera.forward;
+        Vector3 right = camera.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 inputDir = forward * moveDirection.y + right * moveDirection.x;
+
+        Vector3 lookDir = isDashing ? dashDir : inputDir;
+
+        if (lookDir.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(lookDir.normalized, Vector3.up);
+            rotationObject.rotation = Quaternion.RotateTowards(
+                rotationObject.rotation,
+                targetRot,
+                rotationSpeed * Time.deltaTime
+            );
+        }
     }
 }
