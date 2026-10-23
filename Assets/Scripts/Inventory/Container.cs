@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Container : MonoBehaviour
 {
+    [Tooltip("Player Only")]
+    public EquipmentManager equipmentManager;
     public List<ContainerItem> items;
     public event Action<ContainerItem> OnItemAdded;
     public event Action<ContainerItem> OnItemRemoved;
@@ -32,5 +34,21 @@ public class Container : MonoBehaviour
     {
         OnItemRemoved?.Invoke(item);
         items.Remove(items.Find(x => x.item == item.item));
+    }
+
+    public void UseItem(ContainerItem item)
+    {
+        if (item.item is EquipmentItem)
+        {
+            equipmentManager.EquipItem(item.item as EquipmentItem);
+        }
+    }
+
+    public void UnequipItem(ContainerItem item)
+    {
+        if (item.item is EquipmentItem)
+        {
+            equipmentManager.UnequipItem(item.item as EquipmentItem);
+        }
     }
 }
