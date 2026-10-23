@@ -22,6 +22,7 @@ public class ItemSlot : MonoBehaviour
 
     public void RemoveItem()
     {
+        container.UnequipItem(item);
         container.RemoveItem(item);
     }
 

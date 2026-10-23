@@ -3733,9 +3733,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4993290509695355736, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
       insertIndex: 2
       addedObject: {fileID: 6622460279015510581}
-    - targetCorrespondingSourceObject: {fileID: 4993290509695355736, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 6622460279015510586}
   m_SourcePrefab: {fileID: 100100000, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
 --- !u!1 &6622460279015510580 stripped
 GameObject:
@@ -3754,18 +3751,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d29d8229161049d9942094177f570e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  equipmentManager: {fileID: 6622460279015510586}
+  equipmentManager: {fileID: 6622460279015510590}
   items: []
 --- !u!4 &6622460279015510585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3755226358907103680, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
   m_PrefabInstance: {fileID: 6622460279015510579}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6622460279015510586
+--- !u!114 &6622460279015510590 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7139638087818063863, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
+  m_PrefabInstance: {fileID: 6622460279015510579}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6622460279015510580}
   m_Enabled: 1
@@ -3773,11 +3769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dffc256493971b3afbb24e1f0c270e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentManager
-  helmetItem: {fileID: 0}
-  chestItem: {fileID: 0}
-  legsItem: {fileID: 0}
-  feetItem: {fileID: 0}
-  mainHandItem: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

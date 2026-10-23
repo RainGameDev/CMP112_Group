@@ -1,12 +1,28 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
+    [BoxGroup("Items")]
     public ArmourItem helmetItem;
+
+    [BoxGroup("Items")]
     public ArmourItem chestItem;
+
+    [BoxGroup("Items")]
     public ArmourItem legsItem;
+
+    [BoxGroup("Items")]
     public ArmourItem feetItem;
+
+    [BoxGroup("Items")]
     public WeaponItem mainHandItem;
+
+    [BoxGroup("Equipped Objects")]
+    public Transform mainHandHolder;
+
+    [BoxGroup("Equipped Objects")]
+    public GameObject mainHandObject;
 
     public void EquipItem(EquipmentItem item)
     {
@@ -25,7 +41,11 @@ public class EquipmentManager : MonoBehaviour
                 feetItem = item as ArmourItem;
                 break;
             case EquipmentSlot.MainHand:
-                mainHandItem = item as WeaponItem;
+                if (item as WeaponItem != mainHandItem)
+                {
+                    mainHandItem = item as WeaponItem;
+                    mainHandObject = Instantiate(item.equippedPrefab, mainHandHolder);
+                }
                 break;
         }
     }
@@ -47,6 +67,9 @@ public class EquipmentManager : MonoBehaviour
                 feetItem = null;
                 break;
             case EquipmentSlot.MainHand:
+                if (mainHandObject != null)
+                    Destroy(mainHandObject);
+
                 mainHandItem = null;
                 break;
         }

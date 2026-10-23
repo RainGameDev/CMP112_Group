@@ -15,4 +15,7 @@ public class EquipmentItem : Item
 {
     [BoxGroup("Equipment Info")]
     public EquipmentSlot slot;
+
+    [BoxGroup("Equipment Info")]
+    public GameObject equippedPrefab;
 }
