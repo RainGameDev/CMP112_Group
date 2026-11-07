@@ -1,0 +1,9 @@
+PSX Skeleton Character
+by vinrax - https://vinrax.itch.io/psx-skeleton-character
+
+Author's terms: "feel free to use in your projects, just credit me."
+Put this credit in the game's credits screen / README.
+
+Files: skeleton.fbx (rigged, 1596 tris), skeleton_d.png (256x256 diffuse).
+The model has no animations; it's animated procedurally by
+Assets/Scripts/DungeonLevel/SkeletonRigAnimator.cs.
