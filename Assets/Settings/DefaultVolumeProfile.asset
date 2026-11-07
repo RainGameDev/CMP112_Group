@@ -352,7 +352,7 @@ MonoBehaviour:
     m_Value: {fileID: 0}
   EnableFog:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   IgnoreSkybox:
     m_OverrideState: 1
     m_Value: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
     m_Value: 1
   NoiseScale:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0
   NoiseRBGOffsetX:
     m_OverrideState: 1
     m_Value: 0.4
