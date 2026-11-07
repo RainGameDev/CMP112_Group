@@ -77,7 +77,8 @@ public class ContainerUI : MonoBehaviour
         GameObject slot = Instantiate(itemSlot);
         slot.GetComponent<ItemSlot>().item = item;
         slot.GetComponent<ItemSlot>().container = container;
-        slot.transform.parent = itemSlotHolder.transform;
+        // Set parent with false to avoid scaling issues when the parent is scaled
+        slot.transform.SetParent(itemSlotHolder.transform, false);
         itemSlots.Add(slot);
         itemToSlot.Add(item.item);
     }

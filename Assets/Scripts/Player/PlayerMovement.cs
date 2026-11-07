@@ -52,7 +52,8 @@ public class PlayerMovement : MonoBehaviour
     bool dashQueued;
     bool isDashing;
     float dashTimeLeft;
-    float cooldownTimeLeft;
+    // Changed so the HUD can show the cooldown bar
+    [HideInInspector] public float cooldownTimeLeft;
     Vector3 dashDir;
 
     void Start()
