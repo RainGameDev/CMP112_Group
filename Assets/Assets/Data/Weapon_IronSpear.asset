@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Iron Spear
   itemRarity: 0
   itemDescription: An old rusted iron spear.
-  droppedPrefab: {fileID: 0}
+  droppedPrefab: {fileID: 746629208945542781, guid: 42af20d03f929a6a18661995b127f05e, type: 3}
   stacks: 0
   slot: 4
   equippedPrefab: {fileID: 8305105489522601435, guid: 72e8465453e52e2908f405c1925922a8, type: 3}
