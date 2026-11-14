@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,12 +23,14 @@ public class GameUI : MonoBehaviour
     EquipmentManager equipment;
     ContainerUI inventory;
     InteractionManager interaction;
+    CombatManager combat;
 
     // UI parts
     Image health, dash, boss, weapon, flash, fade;
     TMP_Text healthText, stats, objective, message, results;
     CanvasGroup messageBox;
-    GameObject objectiveBox, bossBar, deathScreen, completeScreen;
+    GameObject objectiveBox, bossBar, deathScreen, completeScreen, pauseScreen, mainMenu, hud;
+    static bool menuShown;
 
     // Builds the UI
     void Start()
@@ -39,6 +42,7 @@ public class GameUI : MonoBehaviour
         equipment = player.GetComponent<EquipmentManager>();
         inventory = player.GetComponentInChildren<ContainerUI>(true);
         interaction = player.GetComponentInChildren<InteractionManager>();
+        combat = player.GetComponentInChildren<CombatManager>();
 
         // Make canvas
         GameObject canvas = new("GameUI", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
@@ -51,8 +55,11 @@ public class GameUI : MonoBehaviour
         // Damage flash
         flash = Full(ui, null);
 
+        // HUD group
+        hud = Full(ui, null, 0, Color.clear).gameObject;
+
         // Top bar
-        Transform bar = Img(ui, "ui_panel", topLeft, topRight, Vector2.zero, new Vector2(0, 84)).transform;
+        Transform bar = Img(hud.transform, "ui_panel", topLeft, topRight, Vector2.zero, new Vector2(0, 84)).transform;
         Transform emblem = Img(bar, "ui_slot", topLeft, new Vector2(24, -16), new Vector2(52, 52)).transform;
         Full(emblem, "ui_portrait", 6);
         health = Bar(bar, topLeft, new Vector2(96, -18), new Vector2(420, 18), "ui_bar_health");
@@ -64,29 +71,29 @@ public class GameUI : MonoBehaviour
         stats = Txt(bar, "", 22, grey, right, new Vector2(-28, 0), new Vector2(500, 40), TextAlignmentOptions.Right);
 
         // Objective card
-        objectiveBox = Img(ui, "ui_panel", topLeft, new Vector2(28, -104), new Vector2(560, 96)).gameObject;
+        objectiveBox = Img(hud.transform, "ui_panel", topLeft, new Vector2(28, -104), new Vector2(560, 96)).gameObject;
         Txt(objectiveBox.transform, "Objective", 20, rose, topLeft, new Vector2(22, -14), new Vector2(400, 26)).characterSpacing = 8;
         objective = Txt(objectiveBox.transform, "", 28, white, topLeft, new Vector2(22, -46), new Vector2(520, 36));
 
         // Message area
-        Image messageArea = Img(ui, null, top, new Vector2(0, -280), new Vector2(1700, 150), Color.clear);
+        Image messageArea = Img(hud.transform, null, top, new Vector2(0, -280), new Vector2(1700, 150), Color.clear);
         messageBox = messageArea.gameObject.AddComponent<CanvasGroup>();
         Img(messageArea.transform, "ui_divider", top, Vector2.zero, new Vector2(400, 22));
         message = Txt(messageArea.transform, "", 52, white, centre, Vector2.zero, new Vector2(1700, 70), TextAlignmentOptions.Center);
         Img(messageArea.transform, "ui_divider", bottom, Vector2.zero, new Vector2(400, 22));
 
         // Boss bar
-        boss = Bar(ui, bottom, new Vector2(0, 56), new Vector2(1000, 20), "ui_bar_health");
+        boss = Bar(hud.transform, bottom, new Vector2(0, 56), new Vector2(1000, 20), "ui_bar_health");
         bossBar = boss.transform.parent.gameObject;
         Txt(bossBar.transform, "The Guardian", 30, white, top, new Vector2(0, 50), new Vector2(1000, 40), TextAlignmentOptions.Center).characterSpacing = 8;
 
         // Hotbar slots
-        Transform weaponSlot = Img(ui, "ui_slot", bottomRight, new Vector2(-28, 64), new Vector2(88, 88)).transform;
+        Transform weaponSlot = Img(hud.transform, "ui_slot", bottomRight, new Vector2(-28, 64), new Vector2(88, 88)).transform;
         Full(weaponSlot, "ui_slot_selected");
         weapon = Full(weaponSlot, null, 12);
         weapon.preserveAspect = true;
         Key(weaponSlot, "LMB", "ui_key");
-        Transform bagSlot = Img(ui, "ui_slot", bottomRight, new Vector2(-132, 64), new Vector2(88, 88)).transform;
+        Transform bagSlot = Img(hud.transform, "ui_slot", bottomRight, new Vector2(-132, 64), new Vector2(88, 88)).transform;
         Txt(bagSlot, "=", 40, grey);
         Key(bagSlot, "TAB", "ui_button_secondary");
 
@@ -109,9 +116,29 @@ public class GameUI : MonoBehaviour
         Button(panel, "Play again", "ui_button_primary", new Vector2(-160, 40), () => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
         Button(panel, "Quit", "ui_button_secondary", new Vector2(160, 40), Application.Quit);
 
+        // Pause screen
+        pauseScreen = Full(ui, null, 0, new Color(0, 0, 0, 0.6f)).gameObject;
+        Transform pausePanel = Img(pauseScreen.transform, "ui_panel", centre, Vector2.zero, new Vector2(420, 330)).transform;
+        Txt(Img(pausePanel, "ui_header", topLeft, topRight, Vector2.zero, new Vector2(0, 64)).transform, "Paused", 34, white).characterSpacing = 8;
+        Button(pausePanel, "Resume", "ui_button_primary", new Vector2(0, 180), () => Pause(false));
+        Button(pausePanel, "Main menu", "ui_button_secondary", new Vector2(0, 105), () => Restart(true));
+        Button(pausePanel, "Quit", "ui_button_secondary", new Vector2(0, 30), Application.Quit);
+
+        // Main menu
+        mainMenu = Full(ui, null, 0, new Color(0, 0, 0, 0.75f)).gameObject;
+        Transform title = Img(mainMenu.transform, "ui_band_dark", centre, new Vector2(0, 160), new Vector2(1800, 300)).transform;
+        Img(title, "ui_divider", top, new Vector2(0, -30), new Vector2(400, 22));
+        Txt(title, "THE DROWNED WELL", 96, white, centre, new Vector2(0, 10), new Vector2(1800, 120), TextAlignmentOptions.Center).characterSpacing = 16;
+        Txt(title, "Descend into the depths", 28, grey, centre, new Vector2(0, -80), new Vector2(1800, 40), TextAlignmentOptions.Center);
+        Transform buttons = Img(mainMenu.transform, null, centre, new Vector2(0, -180), new Vector2(300, 160), Color.clear).transform;
+        Button(buttons, "Play", "ui_button_primary", new Vector2(0, 90), () => ShowMenu(false));
+        Button(buttons, "Quit", "ui_button_secondary", new Vector2(0, 10), Application.Quit);
+
         // Hide screens
         deathScreen.SetActive(false);
         completeScreen.SetActive(false);
+        pauseScreen.SetActive(false);
+        ShowMenu(!menuShown);
         StyleInventory();
     }
 
@@ -120,6 +147,9 @@ public class GameUI : MonoBehaviour
     {
         LevelManager lm = LevelManager.Instance;
         if (!lm || !lm.PlayerHealth) return;
+
+        // Pause
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && !lm.IsComplete && !mainMenu.activeSelf) Pause(!pauseScreen.activeSelf);
 
         // Player stats
         health.fillAmount = lm.PlayerHealth.currentHealth / lm.PlayerHealth.maxHealth;
@@ -178,6 +208,40 @@ public class GameUI : MonoBehaviour
             equipped.sizeDelta = Vector2.zero;
             SetFont(slot);
         };
+    }
+
+    // Stop inputs
+    void OnDestroy()
+    {
+        movement?.inputs?.Disable();
+        combat?.inputs?.Disable();
+        inventory?.inputs?.Disable();
+        interaction?.inputs?.Disable();
+    }
+
+    // Menu toggle
+    void ShowMenu(bool show)
+    {
+        mainMenu.SetActive(show);
+        hud.SetActive(!show);
+        menuShown = true;
+        Time.timeScale = show ? 0f : 1f;
+    }
+
+    // Pause toggle
+    void Pause(bool paused)
+    {
+        pauseScreen.SetActive(paused);
+        hud.SetActive(!paused);
+        Time.timeScale = paused ? 0f : 1f;
+    }
+
+    // Reload level
+    void Restart(bool showMenu)
+    {
+        menuShown = !showMenu;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Interact prompt
