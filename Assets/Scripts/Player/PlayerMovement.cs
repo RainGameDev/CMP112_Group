@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [BoxGroup("References")]
     public PlayerInputs inputs;
 
+    [BoxGroup("References")]
+    public CombatManager combatManager;
+
     [BoxGroup("Movement")]
     public float movementSpeed;
 
@@ -78,6 +81,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (combatManager.isAttackLocked)
+        {
+            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            return;
+        }
         Vector3 forward = camera.forward;
         Vector3 right = camera.right;
         forward.y = 0f;

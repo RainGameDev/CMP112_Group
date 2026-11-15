@@ -20,4 +20,4 @@ MonoBehaviour:
   stacks: 0
   slot: 4
   equippedPrefab: {fileID: 8305105489522601435, guid: 72e8465453e52e2908f405c1925922a8, type: 3}
-  damage: 15
+  damage: 7

@@ -15,6 +15,14 @@ public class CombatManager : MonoBehaviour
     [BoxGroup("References")]
     public PlayerInputs inputs;
 
+    [BoxGroup("Combat")]
+    public float attackLockDuration = 0.5f;
+
+    [BoxGroup("Combat")]
+    public bool isAttackLocked;
+
+    float attackLockTimeLeft;
+
     [BoxGroup("Inputs")]
     public bool isAttacking;
 
@@ -26,20 +34,32 @@ public class CombatManager : MonoBehaviour
 
     void Update()
     {
-        isAttacking = inputs.Combat.Attack.WasPressedThisFrame();
+        bool attackPressed = inputs.Combat.Attack.WasPressedThisFrame();
+
+        if (attackLockTimeLeft > 0f)
+        {
+            attackLockTimeLeft -= Time.deltaTime;
+            if (attackLockTimeLeft <= 0f)
+                isAttackLocked = false;
+        }
 
         if (
-            isAttacking
+            attackPressed
+            && !isAttackLocked
             && equipmentManager.mainHandItem != null
             && !containerUI.containerUI.activeInHierarchy
         )
         {
             Debug.Log("Attacking");
             animator.SetBool("Swing", true);
+            isAttackLocked = true;
+            attackLockTimeLeft = attackLockDuration;
         }
         else
         {
             animator.SetBool("Swing", false);
         }
+
+        isAttacking = attackPressed;
     }
 }
