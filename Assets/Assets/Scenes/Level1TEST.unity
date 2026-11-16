@@ -22912,6 +22912,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 0, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114338266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4971088715870899016, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
+  m_PrefabInstance: {fileID: 354655094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702191dd53090cee6a111bde19c440bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatManager
 --- !u!1001 &114459093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72835,6 +72846,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3269153298664059170, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
+      propertyPath: combatManager
+      value: 
+      objectReference: {fileID: 114338266}
     - target: {fileID: 3755226358907103680, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56
@@ -129332,6 +129347,8 @@ MonoBehaviour:
   interactionUI: {fileID: 1833419374}
   anim: {fileID: 614141608}
   weapon: {fileID: 11400000, guid: 97a6f19ef71b8da5a976e07f3682ad62, type: 2}
+  launchUp: 4
+  launchForward: 2.5
 --- !u!95 &614141608 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8949386700465589459, guid: a3dfcd0e45e3f78c8b1c393da39241d4, type: 3}
