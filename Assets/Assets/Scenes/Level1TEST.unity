@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.035, g: 0.03, b: 0.05, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -55207,6 +55207,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3269153298664059170, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
+      propertyPath: combatManager
+      value: 
+      objectReference: {fileID: 760636417}
     - target: {fileID: 3755226358907103680, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56
@@ -56458,7 +56462,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &362542034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56491,7 +56495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f049dfef19d8d4f8599b61f8502dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
-  flashTime: 0.12
+  flashTime: 0
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 1878294428}
 --- !u!114 &362542036
@@ -116953,7 +116957,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &717757462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124723,6 +124727,8 @@ MonoBehaviour:
   equipmentManager: {fileID: 760636409}
   animator: {fileID: 1238833122}
   containerUI: {fileID: 1584526536}
+  attackLockDuration: 0.5
+  isAttackLocked: 0
   isAttacking: 0
 --- !u!114 &760636413
 MonoBehaviour:
@@ -124738,6 +124744,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Container
   equipmentManager: {fileID: 760636409}
   items: []
+--- !u!114 &760636417 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4971088715870899016, guid: fc32d20403eb23f3a97289fafd8c6663, type: 3}
+  m_PrefabInstance: {fileID: 354655094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760636406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702191dd53090cee6a111bde19c440bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatManager
 --- !u!1 &761517254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5704152589071869940, guid: dc6eb70e895835b4cafbacc141c39af6, type: 3}
@@ -137453,7 +137470,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &839709795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137486,7 +137503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f049dfef19d8d4f8599b61f8502dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
-  flashTime: 0.12
+  flashTime: 0
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 1680069716}
 --- !u!114 &839709797
@@ -204974,7 +204991,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &1274835445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205007,7 +205024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f049dfef19d8d4f8599b61f8502dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
-  flashTime: 0.12
+  flashTime: 0
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 1806093001}
 --- !u!114 &1274835447
@@ -227792,7 +227809,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &1412339340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227825,7 +227842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f049dfef19d8d4f8599b61f8502dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
-  flashTime: 0.12
+  flashTime: 0
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 319310944}
 --- !u!114 &1412339342
@@ -284336,7 +284353,7 @@ MonoBehaviour:
   lungeTime: 0.18
   attackCooldown: 1.1
   damage: 0.5
-  knockback: 6
+  knockback: 1
 --- !u!114 &1783508623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284369,7 +284386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f049dfef19d8d4f8599b61f8502dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
-  flashTime: 0.12
+  flashTime: 0
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 2494773}
 --- !u!114 &1783508625
@@ -297723,6 +297740,7 @@ Transform:
   - {fileID: 1855244335}
   - {fileID: 1597664638}
   - {fileID: 1662946404}
+  - {fileID: 2054517505}
   - {fileID: 1542922764}
   - {fileID: 232233222}
   - {fileID: 967877913}
@@ -327010,6 +327028,100 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1134659767}
   m_SourcePrefab: {fileID: 100100000, guid: 2a2e2c1602f096c4c93d40d8ab5dd28d, type: 3}
+--- !u!1001 &2054517504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1871541158}
+    m_Modifications:
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.22399998
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12250002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.09599989
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 44.800003
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164225892394912789, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      propertyPath: m_Name
+      value: Exit Frame (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9164225892394912789, guid: 612b057416971954fbdc6386caedf844, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2054517507}
+  m_SourcePrefab: {fileID: 100100000, guid: 612b057416971954fbdc6386caedf844, type: 3}
+--- !u!4 &2054517505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9159061616852326812, guid: 612b057416971954fbdc6386caedf844, type: 3}
+  m_PrefabInstance: {fileID: 2054517504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2054517506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9164225892394912789, guid: 612b057416971954fbdc6386caedf844, type: 3}
+  m_PrefabInstance: {fileID: 2054517504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2054517507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054517506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dcb888f3c03a04a97213784c34e00d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutawayPiece
 --- !u!1 &2055299792 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7408957516224206830, guid: 2a2e2c1602f096c4c93d40d8ab5dd28d, type: 3}
@@ -336819,7 +336931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -19.99997}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: -30, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2117247859
