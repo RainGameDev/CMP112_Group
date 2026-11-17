@@ -122175,7 +122175,7 @@ GameObject:
   - component: {fileID: 579208007}
   - component: {fileID: 579208008}
   m_Layer: 0
-  m_Name: Dungeon Map (generated)
+  m_Name: Dungeon Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
